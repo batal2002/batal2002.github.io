@@ -26,7 +26,7 @@ const ImageModal = ({src, sx}: Props) => {
             <Box display={'block'} component={'img'} src={src} sx={{...sx, opacity: isLoaded ? 1 : 0, height: isLoaded ? '100%' : '300px'}} onLoad={handleImageOnLoad}
                  onClick={() => handleOpen(src)}>
             </Box>
-            {!isLoaded && <Skeleton animation={'wave'} sx={{width: '100%', height: '300px', transform: 'scale(1, 1)', position: 'absolute', top: 0, left: 0}}/>}
+            {!isLoaded && <Skeleton animation={'wave'} sx={{...sx, width: '100%', height: '300px', transform: 'scale(1, 1)', position: 'absolute', top: 0, left: 0}}/>}
 
             {currentImg && <Modal
                 keepMounted

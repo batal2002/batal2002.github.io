@@ -49,7 +49,7 @@ const SendForm = ({recipientId}: Props) => {
                 if (!messageText && previewImages.length === 0) {
                     setError("message", {
                         type: "manual",
-                        message: "message is empty",
+                        message: "Message is empty",
                     })
                     return
                 }
@@ -127,6 +127,7 @@ const SendForm = ({recipientId}: Props) => {
                             fullWidth
                             label="Write a message"
                             multiline
+                            maxRows={6}
                             onKeyDown={(e) => enterPress(e, handleSubmit(onSubmit))}
                             onChange={e => field.onChange(e)}
                             value={field.value}

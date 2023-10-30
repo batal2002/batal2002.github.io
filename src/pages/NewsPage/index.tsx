@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Box, LinearProgress, Link, Typography} from "@mui/material";
-import {useCollectionDataOnce} from "react-firebase-hooks/firestore";
+import {useCollectionData, useCollectionDataOnce} from "react-firebase-hooks/firestore";
 import {collection, orderBy, query, where} from "firebase/firestore";
 import {firestore} from "../../firebase";
 import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux";
@@ -16,7 +16,7 @@ const NewsPage = () => {
 
     const [subscriptionsList, setSubscriptionsList] = useState<(string)[]>([''])
 
-    const [subscriptionsData, subscriptionsLoading] = useCollectionDataOnce(query(
+    const [subscriptionsData, subscriptionsLoading] = useCollectionData(query(
         collection(firestore, `usersSubscriptions/${userId}/userSubscriptions`)
     ))
     useEffect(() => {
@@ -24,7 +24,7 @@ const NewsPage = () => {
             setSubscriptionsList(subscriptionsData.map(item => item.subscriptionId))
     }, [subscriptionsData])
 
-    const [postsData, postsLoading, postsError, postsSnapshot] = useCollectionDataOnce(query(
+    const [postsData, postsLoading, postsError, postsSnapshot] = useCollectionData(query(
         collection(firestore, `posts`),
         where('authorId', 'in', subscriptionsList),
         orderBy('date')

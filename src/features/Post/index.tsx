@@ -74,7 +74,7 @@ const Post = ({id, date, text, authorId}: Props) => {
                                 width="80%"
                             />
                             :
-                            <Link component={RouterLink} underline="hover"  to={`/profile/${author?.id}`}>
+                            <Link component={RouterLink} underline="hover"  to={`/profile/${author?.userId}`}>
                             <Typography sx={{color: 'secondary', fontWeight: 500}}>{author?.name} {author?.surname}</Typography>
                             </Link>
                         }

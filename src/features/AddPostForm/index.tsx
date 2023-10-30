@@ -79,6 +79,7 @@ const AddPostForm = () => {
                             fullWidth
                             label="Whats new?"
                             multiline
+                            maxRows={6}
                             onKeyDown={(e) => enterPress(e, handleSubmit(onSubmit))}
                             onChange={e => field.onChange(e)}
                             value={field.value}
