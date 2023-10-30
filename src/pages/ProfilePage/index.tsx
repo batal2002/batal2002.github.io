@@ -74,7 +74,7 @@ const ProfilePage = () => {
     }, [profileData])
 
     useEffect(() => {
-        if (profileSubscriptions && !profileTotalSubscriptionsLoading) {
+        if (profileSubscriptions && !profileSubscriptionsLoading) {
             dispatch(setProfileSubscriptionsList(profileSubscriptions))
         }
     }, [profileSubscriptions])
