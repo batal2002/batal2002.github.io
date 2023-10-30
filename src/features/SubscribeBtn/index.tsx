@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from "@mui/material";
 import {useAppSelector} from "../../shared/hooks/redux";
-import {collection, deleteDoc, doc, query, setDoc, updateDoc, increment } from "firebase/firestore";
+import {collection, deleteDoc, doc, query, setDoc, updateDoc} from "firebase/firestore";
 import {firestore} from "../../firebase";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 
@@ -15,7 +15,7 @@ const SubscribeBtn = ({accountId}: Props) => {
             collection(firestore, `usersSubscriptions/${userId}/userSubscriptions`)
         )
     )
-    const [userSubscribers, userSubscribersLoading] = useCollectionData(query(
+    const [userSubscribers] = useCollectionData(query(
             collection(firestore, `usersSubscribers/${accountId}/userSubscribers`)
         )
     )
@@ -76,10 +76,10 @@ const SubscribeBtn = ({accountId}: Props) => {
             {
                 userSubscriptions && userSubscriptions.find(vendor => vendor['subscriptionId'] == accountId) ?
                     <Button variant={'contained'} disabled={userSubscriptionsLoading}
-                            onClick={UnsubscribeClick}>Unsubscribe</Button>
+                            onClick={UnsubscribeClick}>Unfollow</Button>
                     :
                     <Button variant={'contained'} disabled={userSubscriptionsLoading}
-                            onClick={e => SubscribeClick(e)}>Subscribe</Button>
+                            onClick={e => SubscribeClick(e)}>Follow</Button>
             }
         </>
     );
