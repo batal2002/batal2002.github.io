@@ -99,6 +99,10 @@ const routesNotAuth = [
                 path: '/*',
                 element: <Navigate to={'/login'}/>
             },
+            {
+                path: '/',
+                element: <Navigate to={'/login'}/>
+            },
 
         ]
     }
