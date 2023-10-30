@@ -13,7 +13,7 @@ const ProfileGallery = () => {
 
 
     return (
-        <Box sx={{marginTop: 2}}>
+        <Box sx={{marginTop: 2, mb: 2}}>
             {imagesList.length != 0 && <Typography variant="h6" gutterBottom>
                 Gallery
             </Typography>}
