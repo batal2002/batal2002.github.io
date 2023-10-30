@@ -1,1 +1,2 @@
-# Template of React TS app 
+# Mini social-network
+React + Redux + Firebase + Material UI
