@@ -3,39 +3,27 @@ import {useCollectionData} from "react-firebase-hooks/firestore";
 import {collection, query, where} from "firebase/firestore";
 import {firestore} from "../../firebase";
 import {useAuth} from "../../shared/hooks/useAuth";
-import {Avatar, Box, Link, Typography} from "@mui/material";
-import {Link as RouterLink} from "react-router-dom";
+import {Box, LinearProgress, Typography} from "@mui/material";
+import UserItem from "../../widgets/UserItem";
+import {useAppSelector} from "../../shared/hooks/redux";
 
 const UsersPage = () => {
-    const {userId} = useAuth()
+    const {userId} = useAppSelector(state => state.user)
 
     const [usersData, usersLoading] = useCollectionData(query(
             collection(firestore, 'users'),
-            where('id', '!=', userId)
+            where('userId', '!=', userId)
         )
     )
-    console.log(usersData)
     return (
-        <div>
+        <Box  sx={{maxWidth: 580}}>
             <Typography variant={'h6'}>Users</Typography>
-            {usersData && usersData.map(user =>
-                <Box key={user.id} display={'flex'}
-                     sx={{
-                         gap: 1, paddingBottom: 1, paddingTop: 1,
-                         "&:not(:last-child)": {
-                             borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-                         }
-                     }}>
-                    <Link component={RouterLink} to={`/profile/${user.id}`}>
-                        <Avatar sx={{width: 100, height: 100}} src={user.avatarURL}/>
-                    </Link>
-                    <Box>
-                        <Link component={RouterLink} underline="hover" color={'rgba(0, 0, 0, 0.87)'}
-                              to={`/profile/${user.id}`}>{user.name + ' ' + user.surname}</Link>
-                    </Box>
-                </Box>
+            {usersLoading && <LinearProgress/>}
+            {!usersLoading && usersData && usersData.map(user =>
+                <UserItem key={user.userId} userId={user.userId} avatarURL={user.avatarURL} name={user.name}
+                          surname={user.surname} email={user.email}/>
             )}
-        </div>
+        </Box>
     );
 };
 

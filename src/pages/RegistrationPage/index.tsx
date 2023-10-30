@@ -1,8 +1,6 @@
 import React from 'react';
 import {Box, Container, Typography} from "@mui/material";
 import RegistrationForm from "../../features/RegistrationForm";
-import {Navigate} from "react-router";
-import {useAuth} from "../../shared/hooks/useAuth";
 
 const RegistrationPage = () => {
 

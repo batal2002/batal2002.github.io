@@ -33,8 +33,8 @@ const RegistrationForm = () => {
         dispatch(setLoginLoading())
         createUserWithEmailAndPassword(auth, data.email, data.password)
             .then(async ({user}) => {
-                await setDoc(doc(firestore, 'profile', user.uid), {
-                    id: user.uid,
+                await setDoc(doc(firestore, 'users', user.uid), {
+                    userId: user.uid,
                     email: user.email,
                     name: data.name,
                     surname: data.surname

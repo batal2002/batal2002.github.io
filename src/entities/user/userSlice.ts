@@ -20,7 +20,8 @@ const userSlice = createSlice({
             state.isLoginLoading = false;
         },
         setUser(state, action) {
-            state.userId = action.payload.id;
+            state.userId = action.payload.userId;
+
             state.name = action.payload.name;
             state.surname = action.payload.surname;
             state.avatarURL = action.payload.avatarURL;

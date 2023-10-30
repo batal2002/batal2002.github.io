@@ -1,11 +1,11 @@
 import React from 'react';
 
-const MessagesPage = () => {
+const Image = () => {
     return (
         <div>
-            messages
+
         </div>
     );
 };
 
-export default MessagesPage;
+export default Image;

@@ -44,6 +44,7 @@ const LoginForm = () => {
         <Box component="form" noValidate sx={{mt: 1}} onSubmit={handleSubmit(onSubmit)}>
             <Controller control={control} name={'email'} render={({field}) => (
                 <TextField
+                    id={'email'}
                     margin="normal"
                     required
                     fullWidth

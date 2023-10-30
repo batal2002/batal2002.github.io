@@ -11,11 +11,11 @@ export const registrationFormSchema = z
         name: z
             .string()
             .min(2, {message: 'Name is too short'})
-            .max(20, 'Name is too long'),
+            .max(15, 'Name is too long'),
         surname: z
             .string()
             .min(2, {message: 'Surname is too short'})
-            .max(20, 'Surname is too long'),
+            .max(15, 'Surname is too long'),
         // age: z
         //     .number(),
         email: z.string().email('Incorrect email'),
@@ -26,3 +26,15 @@ export const registrationFormSchema = z
         path: ['confirmPassword'],
         message: 'The entered passwords do not match',
     })
+
+export const postFormSchema = z.object({
+    post: z
+        .string()
+        .max(10000, 'Post is too long'),
+})
+
+export const sendFormSchema = z.object({
+    message: z
+        .string()
+        .max(10000, 'Message is too long'),
+})

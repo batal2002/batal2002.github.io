@@ -6,15 +6,19 @@ import App from "../index";
 import ProfilePage from "../../pages/ProfilePage";
 import UsersPage from "../../pages/UsersPage";
 import NewsPage from "../../pages/NewsPage";
-import MessagesPage from "../../pages/MessagesPage";
+import DialogsPage from "../../pages/DialogsPage";
 import {Navigate} from "react-router";
+import SubscribersPage from "../../pages/SubscribersPage";
+import SubscriptionsPage from "../../pages/SubscriptionsPage";
+import DialogPage from "../../pages/DIalogPage";
+import NotFound from "../../widgets/NotFound";
 
 
 const routes = [
     {
         path: '/',
         element: <App/>,
-        errorElement: <h1>404</h1>,
+        errorElement: <NotFound item={'Page'} />,
         children: [
             {
                 path: '/login',
@@ -41,8 +45,28 @@ const routes = [
                 element: <Navigate to={'/news'}/>
             },
             {
-                path: '/messages',
-                element: <MessagesPage/>
+                path: '/dialogs',
+                element: <DialogsPage/>
+            },
+            {
+                path: '/dialogs/:recipientId',
+                element: <DialogPage/>
+            },
+            {
+                path: '/subscribers/',
+                element: <SubscribersPage/>
+            },
+            {
+                path: '/subscribers/:profileId',
+                element: <SubscribersPage/>
+            },
+            {
+                path: '/subscriptions/',
+                element: <SubscriptionsPage/>
+            },
+            {
+                path: '/subscriptions/:profileId',
+                element: <SubscriptionsPage/>
             },
             {
                 path: '/users',
