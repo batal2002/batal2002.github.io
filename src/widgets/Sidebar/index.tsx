@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -7,6 +7,10 @@ import FeedIcon from '@mui/icons-material/Feed';
 import {Link} from "react-router-dom";
 import Diversity2Icon from '@mui/icons-material/Diversity2';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
+import {useCollectionData} from "react-firebase-hooks/firestore";
+import {collection, query, where} from "firebase/firestore";
+import {firestore} from "../../firebase";
+import {useAppSelector} from "../../shared/hooks/redux";
 
 interface IIcons {
     [key: string]: JSX.Element
@@ -17,6 +21,13 @@ interface ILinks {
 }
 
 const Sidebar = () => {
+    const {userId} = useAppSelector(state => state.user)
+    const [uncheckedDialogsData, uncheckedDialogsLoading] = useCollectionData(query(
+        collection(firestore, `usersDialogs/${userId}/userDialogs`),
+        where('uncheckedMessages', '>', 0)
+    ))
+    const [count, setCount] = useState(2)
+
     const drawerWidth = 240;
 
     const icons: IIcons = {
@@ -36,6 +47,14 @@ const Sidebar = () => {
         'Users': '/users',
     }
 
+    useEffect(() => {
+        if (uncheckedDialogsData && !uncheckedDialogsLoading) {
+            const count = uncheckedDialogsData.reduce((acc, item) => {
+                return acc + item.uncheckedMessages
+            }, 0)
+            setCount(count)
+        }
+    }, [uncheckedDialogsData])
     return (
         <Box
             sx={{
@@ -53,6 +72,19 @@ const Sidebar = () => {
                                     {icons[text]}
                                 </ListItemIcon>
                                 <ListItemText primary={text}/>
+                                {text === 'Messenger' && count > 0 && <Box sx={{
+                                    alignSelf: 'center',
+                                    borderRadius: '50%',
+                                    width: 20,
+                                    height: 20,
+                                    bgcolor: '#1976d2',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    color: '#fff',
+                                    fontSize: 12,
+                                    fontWeight: '600'
+                                }}>{count}</Box>}
                             </ListItemButton>
                         </ListItem>
                     ))}

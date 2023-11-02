@@ -71,10 +71,24 @@ const DialogItem = ({recipientId, lastMessage, lastUpdateDate, uncheckedMessages
                                             (lastMessage.imageCount > 1 ? lastMessage.imageCount + ' photos' : lastMessage.imageCount + ' photo')}
                                     </Typography>
                                 </Box>
-                                <Typography sx={{fontSize: 13, color: '#666'}}>{lastUpdateDate.slice(0, -3)}</Typography>
+                                <Typography
+                                    sx={{fontSize: 13, color: '#666'}}>{lastUpdateDate.slice(0, -3)}</Typography>
                             </Box>
-                            {uncheckedMessages > 0 && <Box sx={{alignSelf: 'center', borderRadius: '50%', width: 20, height: 20, bgcolor: '#1976d2', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                <Typography sx={{color: '#fff', fontSize: 12, fontWeight: '600'}}>{uncheckedMessages}</Typography>
+                            {uncheckedMessages > 0 && <Box sx={{
+                                alignSelf: 'center',
+                                borderRadius: '50%',
+                                width: 20,
+                                height: 20,
+                                bgcolor: '#1976d2',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Typography sx={{
+                                    color: '#fff',
+                                    fontSize: 12,
+                                    fontWeight: '600'
+                                }}>{uncheckedMessages}</Typography>
                             </Box>
                             }
                         </Box>
