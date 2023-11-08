@@ -31,7 +31,7 @@ const UserItem = ({userId, avatarURL, name, surname, email}: Props) => {
 
             <Box display={'flex'} sx={{gap: 1}}>
                 <Link component={RouterLink} to={`/profile/${userId}`}>
-                    <Avatar sx={{width: windowWidth < 500 ? 70 : 100, height: windowWidth < 500 ? 60 : 100}}
+                    <Avatar sx={{width: windowWidth < 500 ? 70 : 100, height: windowWidth < 500 ? 70 : 100}}
                             src={avatarURL}/>
                 </Link>
                 <Box>
