@@ -11,8 +11,9 @@ import DialogItem from "../../widgets/DialogItem";
 const DialogsPage = () => {
     const dispatch = useAppDispatch()
     const {userId} = useAppSelector(state => state.user)
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
     const {dialogsList, isLoading} = useAppSelector(state => state.dialogs)
-    const [dialogsData, dialogsLoading, error, dialogSnapshot] = useCollectionData(query(
+    const [dialogsData, dialogsLoading] = useCollectionData(query(
         collection(firestore, `usersDialogs/${userId}/userDialogs`),
         orderBy('lastUpdateDate')
     ))
@@ -36,7 +37,7 @@ const DialogsPage = () => {
 
 
     return (
-        <Box sx={{maxWidth: 580}}>
+        <Box sx={{maxWidth: 580, m: (windowWidth <= 1200) ? '0 auto' : 0}}>
             {isLoading && <LinearProgress/>}
             {dialogsList && (
                 dialogsList.length > 0 ?

@@ -16,7 +16,7 @@ const StartDialogBtn = () => {
     }
 
     return (
-        <Button onClick={onClick} variant={'contained'}>Start
+        <Button onClick={onClick} variant={'contained'} sx={{width: 132}}>Start
             dialog</Button>
     );
 };

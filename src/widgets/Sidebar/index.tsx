@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -20,13 +20,18 @@ interface ILinks {
     [key: string]: string
 }
 
-const Sidebar = () => {
+interface Props {
+    isMobile: boolean
+    setOpenDrawer?: Dispatch<SetStateAction<boolean>>
+}
+
+const Sidebar = ({isMobile, setOpenDrawer}: Props) => {
     const {userId} = useAppSelector(state => state.user)
     const [uncheckedDialogsData, uncheckedDialogsLoading] = useCollectionData(query(
         collection(firestore, `usersDialogs/${userId}/userDialogs`),
         where('uncheckedMessages', '>', 0)
     ))
-    const [count, setCount] = useState(2)
+    const [count, setCount] = useState(0)
 
     const drawerWidth = 240;
 
@@ -47,6 +52,12 @@ const Sidebar = () => {
         'Users': '/users',
     }
 
+    const onClick = () => {
+        if (setOpenDrawer && isMobile) {
+            setOpenDrawer(false)
+        }
+    }
+
     useEffect(() => {
         if (uncheckedDialogsData && !uncheckedDialogsLoading) {
             const count = uncheckedDialogsData.reduce((acc, item) => {
@@ -55,6 +66,7 @@ const Sidebar = () => {
             setCount(count)
         }
     }, [uncheckedDialogsData])
+
     return (
         <Box
             sx={{
@@ -63,11 +75,11 @@ const Sidebar = () => {
                 [`& .MuiDrawer-paper`]: {width: drawerWidth},
             }}
         >
-            <Box sx={{overflow: 'auto'}}>
+            <Box sx={{overflow: 'auto', pt: isMobile ? '64px' : 0}}>
                 <List>
                     {['Profile', 'News', 'Messenger', 'Subscriptions', 'Subscribers', 'Users'].map((text) => (
                         <ListItem component={Link} to={links[text]} key={text} disablePadding>
-                            <ListItemButton>
+                            <ListItemButton onClick={onClick}>
                                 <ListItemIcon>
                                     {icons[text]}
                                 </ListItemIcon>

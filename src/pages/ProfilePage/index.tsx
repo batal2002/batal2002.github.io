@@ -14,7 +14,7 @@ import {
     setProfileTotalSubscribers,
     setProfileTotalSubscriptions
 } from "../../entities/profile/profileSlice";
-import {useAppDispatch} from "../../shared/hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux";
 import ProfileInfo from "../../widgets/ProfileInfo";
 import {Box, LinearProgress} from "@mui/material";
 import {IImage} from "../../shared/model/types";
@@ -29,6 +29,7 @@ const ProfilePage = () => {
     const dispatch = useAppDispatch()
     const id = profileId || userId
     const isUser = id === userId
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
 
     const [imagesData, imagesLoading, error, snapshot] = useCollectionData(query(
             collection(firestore, `usersImages/${id}/userImages`),
@@ -113,10 +114,10 @@ const ProfilePage = () => {
             <ProfileGallery/>
             <Box display={'flex'} sx={{gap: 2, alignItems: 'start'}}>
                 <ProfilePosts/>
-                <Box sx={{flexGrow: 1}}>
+                {windowWidth > 900 && <Box sx={{width: 300, flexShrink: 0}}>
                     <ProfileSubscriptions/>
                     <ProfileSubscribers/>
-                </Box>
+                </Box>}
             </Box>
         </>
     );

@@ -1,7 +1,8 @@
 import React from 'react';
-import {Avatar, Box, Button, Link, Typography} from "@mui/material";
+import {Avatar, Box, Link, Typography} from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
 import SubscribeBtn from "../../features/SubscribeBtn";
+import {useAppSelector} from "../../shared/hooks/redux";
 
 interface Props {
     userId: string
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const UserItem = ({userId, avatarURL, name, surname, email}: Props) => {
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
 
     return (
         <Box display={'flex'}
@@ -29,15 +31,18 @@ const UserItem = ({userId, avatarURL, name, surname, email}: Props) => {
 
             <Box display={'flex'} sx={{gap: 1}}>
                 <Link component={RouterLink} to={`/profile/${userId}`}>
-                    <Avatar sx={{width: 100, height: 100}} src={avatarURL}/>
+                    <Avatar sx={{width: windowWidth < 500 ? 70 : 100, height: windowWidth < 500 ? 60 : 100}}
+                            src={avatarURL}/>
                 </Link>
                 <Box>
                     <Link component={RouterLink} underline="hover" color={'rgba(0, 0, 0, 0.87)'}
+                          sx={{fontSize: windowWidth < 500 ? 12 : 16}}
                           to={`/profile/${userId}`}>{name + ' ' + surname}</Link>
-                    <Typography>{email}</Typography>
+                    <Typography sx={{fontSize: windowWidth < 500 ? 12 : 16}}>{email}</Typography>
                 </Box>
             </Box>
-            <SubscribeBtn accountId={userId}/>
+            <SubscribeBtn sx={windowWidth < 500 ? {fontSize: 11, textTransform: 'lowercase', p: 0.5} : {}}
+                          accountId={userId}/>
         </Box>
     );
 };

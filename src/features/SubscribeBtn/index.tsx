@@ -7,9 +7,10 @@ import {useCollectionData} from "react-firebase-hooks/firestore";
 
 interface Props {
     accountId: string
+    sx?: any
 }
 
-const SubscribeBtn = ({accountId}: Props) => {
+const SubscribeBtn = ({accountId, sx}: Props) => {
     const {userId} = useAppSelector(state => state.user)
     const [userSubscriptions, userSubscriptionsLoading] = useCollectionData(query(
             collection(firestore, `usersSubscriptions/${userId}/userSubscriptions`)
@@ -76,10 +77,10 @@ const SubscribeBtn = ({accountId}: Props) => {
             {
                 userSubscriptions && userSubscriptions.find(vendor => vendor['subscriptionId'] == accountId) ?
                     <Button variant={'contained'} disabled={userSubscriptionsLoading}
-                            onClick={UnsubscribeClick}>Unfollow</Button>
+                            onClick={UnsubscribeClick} sx={sx}>Unfollow</Button>
                     :
                     <Button variant={'contained'} disabled={userSubscriptionsLoading}
-                            onClick={e => SubscribeClick(e)}>Follow</Button>
+                            onClick={e => SubscribeClick(e)} sx={sx}>Follow</Button>
             }
         </>
     );

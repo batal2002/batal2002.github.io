@@ -15,7 +15,7 @@ const ProfileSubscriptions = () => {
                             variant="subtitle2">Subscriptions</Typography>
                 <Typography sx={{fontSize: 14, opacity: 0.6}}>{totalSubscriptions}</Typography>
             </Box>
-            <Grid container columns={4} spacing={1}>
+            <Grid container columns={4} spacing={0.5}>
                 {
                     subscriptionsList?.map(subscription => <SubscriptionItem key={subscription.subscriptionId}
                                                                              subscriptionId={subscription.subscriptionId}/>)

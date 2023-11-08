@@ -14,6 +14,7 @@ const ProfilePosts = () => {
     const dispatch = useAppDispatch()
     const {isUser, postsList, profileId} = useAppSelector(state => state.profile)
 
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
     const [postsData, postsLoading, error, snapshot] = useCollectionData(query(
             collection(firestore, `posts`),
             where('authorId', '==', profileId),
@@ -42,18 +43,20 @@ const ProfilePosts = () => {
     }, [postsData])
 
     return (
-        <Box sx={{maxWidth: 580, width: '100%'}}>
+        <Box sx={{ width: '100%'}}>
             <Typography variant={'h6'} sx={{marginBottom: 1}}>Posts</Typography>
             {isUser && <AddPostForm/>}
-            {postsLoading ?
-                <LinearProgress/> :
-                <Box>
-                    {postsList.length > 0 ?
-                        postsList.map(post => <Post key={post.id} id={post.id} date={post.date} text={post.text} authorId={post.authorId}/>) :
-                        <Typography variant={'h4'} sx={{color: '#1976d2', textAlign: 'center'}}>There are no posts here yet</Typography>
-                    }
-                </Box>
-            }
+            <Box sx={{maxWidth: 580,m: windowWidth < 900 ? '0 auto' : 0}}>
+                {postsLoading ?
+                    <LinearProgress/> :
+                    <Box>
+                        {postsList.length > 0 ?
+                            postsList.map(post => <Post key={post.id} id={post.id} date={post.date} text={post.text} authorId={post.authorId}/>) :
+                            <Typography variant={'h4'} sx={{color: '#1976d2', textAlign: 'center'}}>There are no posts here yet</Typography>
+                        }
+                    </Box>
+                }
+            </Box>
         </Box>
     );
 };

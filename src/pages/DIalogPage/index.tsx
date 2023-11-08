@@ -16,6 +16,7 @@ const DialogPage = () => {
     const ref = useRef<HTMLDivElement | null>(null)
     const {userId} = useAppSelector(state => state.user)
     const {messages} = useAppSelector(state => state.dialog)
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
     const dispatch = useAppDispatch()
     const {recipientId} = useParams()
     const [messagesData, messagesLoading, error, messagesSnapshot] = useCollectionData(query(
@@ -84,13 +85,14 @@ const DialogPage = () => {
     return (
         <Box sx={{
             position: 'relative',
-            height: 'calc(100vh - 140px)',
+            height: (windowWidth <= 1200) ? 'calc(100vh - 100px)' : 'calc(100vh - 140px)',
             maxWidth: 580,
             bgcolor: '#edf1f7',
             borderRadius: 3,
             overflow: 'hidden',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            m: (windowWidth <= 1200) ? '0 auto' : 0
         }}>
             <DialogTitle/>
             <Box sx={{overflow: 'auto', height: '100%', position: 'relative', p: '20px 20px 0'}}>

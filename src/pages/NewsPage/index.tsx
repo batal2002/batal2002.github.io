@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Box, LinearProgress, Link, Typography} from "@mui/material";
-import {useCollectionData, useCollectionDataOnce} from "react-firebase-hooks/firestore";
+import {useCollectionData} from "react-firebase-hooks/firestore";
 import {collection, orderBy, query, where} from "firebase/firestore";
 import {firestore} from "../../firebase";
 import {useAppDispatch, useAppSelector} from "../../shared/hooks/redux";
@@ -14,9 +14,10 @@ const NewsPage = () => {
     const dispatch = useAppDispatch()
     const {postList} = useAppSelector(state => state.posts)
 
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
     const [subscriptionsList, setSubscriptionsList] = useState<(string)[]>([''])
 
-    const [subscriptionsData, subscriptionsLoading] = useCollectionData(query(
+    const [subscriptionsData] = useCollectionData(query(
         collection(firestore, `usersSubscriptions/${userId}/userSubscriptions`)
     ))
     useEffect(() => {
@@ -52,13 +53,13 @@ const NewsPage = () => {
 
 
     return (
-        <Box sx={{maxWidth: 580, width: '100%'}}>
+        <Box sx={{maxWidth: 580, width: '100%', m: (windowWidth <= 1200) ? '0 auto' : 0}}>
             {postsLoading ?
                 <LinearProgress/> :
                 (postList.length > 0 ?
                         postList.map(post => <Post key={post.id} id={post.id} date={post.date} text={post.text}
                                                    authorId={post.authorId}/>) :
-                        <Box sx={{ textAlign: 'center'}}>
+                        <Box sx={{textAlign: 'center'}}>
                             <Typography variant={'h5'} sx={{color: '#1976d2'}}>News not
                                 found</Typography>
                             <Link component={RouterLink} to={'/users'}>

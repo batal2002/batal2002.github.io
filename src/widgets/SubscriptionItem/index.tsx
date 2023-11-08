@@ -5,14 +5,15 @@ import {useDocumentData} from "react-firebase-hooks/firestore";
 import {firestore} from "../../firebase";
 import {doc} from "firebase/firestore";
 import {Link as RouterLink} from "react-router-dom";
+import {useAppSelector} from "../../shared/hooks/redux";
 
 interface Props {
     subscriptionId: string
 }
 
 const SubscriptionItem = ({subscriptionId}: Props) => {
-
     const [userData, userLoading] = useDocumentData(doc(firestore, `users/${subscriptionId}`))
+    const {windowWidth} = useAppSelector(state => state.windowWidth)
 
     return (
 
@@ -31,7 +32,7 @@ const SubscriptionItem = ({subscriptionId}: Props) => {
             <Box display={'flex'} sx={{gap: 1}}>
                 {userLoading ?
                     <>
-                        <Skeleton animation={'wave'} variant="circular" sx={{width: 100, height: 100}}/>
+                        <Skeleton animation={'wave'} variant="circular" sx={{width: windowWidth < 500 ? 70 : 100, height: windowWidth < 500 ? 70 : 100}}/>
                         <Box>
                             <Skeleton
                                 animation="wave"
@@ -47,17 +48,17 @@ const SubscriptionItem = ({subscriptionId}: Props) => {
                     </>
                     :
                     <>
-                        <Avatar sx={{width: 100, height: 100}} src={userData?.avatarURL}/>
+                        <Avatar sx={{width: windowWidth < 500 ? 70 : 100, height: windowWidth < 500 ? 70 : 100}} src={userData?.avatarURL}/>
                         <Box>
-                            <Typography color={'rgba(0, 0, 0, 0.87)'}>
+                            <Typography color={'rgba(0, 0, 0, 0.87)'} sx={{fontSize: windowWidth < 500 ? 12 : 16}}>
                                 {userData?.name + ' ' + userData?.surname}
                             </Typography>
-                            <Typography>{userData?.email}</Typography>
+                            <Typography sx={{fontSize: windowWidth < 500 ? 12 : 16}}>{userData?.email}</Typography>
                         </Box>
                     </>
                 }
             </Box>
-            <SubscribeBtn accountId={subscriptionId}/>
+            <SubscribeBtn sx={windowWidth < 500 ? {fontSize: 11, textTransform: 'lowercase', p: 0.5} : {}} accountId={subscriptionId}/>
 
         </Box>
     );

@@ -13,7 +13,7 @@ const ProfileSubscribers = () => {
                 <Typography component={Link} to={`/subscribers/${profileId}`} variant="subtitle2">Subscribers</Typography>
                 <Typography sx={{fontSize: 14, opacity: 0.6}}>{totalSubscribers}</Typography>
             </Box>
-            <Grid container columns={4} spacing={1}>
+            <Grid container columns={4} spacing={0.5}>
                 {
                     subscribersList?.map(subscriber => <SubscriberItem key={subscriber.subscriberId}
                                                                        subscriberId={subscriber.subscriberId}/>)
